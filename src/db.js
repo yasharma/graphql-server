@@ -13,14 +13,22 @@ const createDatabase = () => {
 
 const mock = [
     {
-      id: 1,
-      deliveryAddress: 'deliveryAddress',
-      total: 100,
-      items: '1,2',
-      status: 'PAID',
-      comment: 'Test comment'
+        id: 1,
+        deliveryAddress: 'deliveryAddress',
+        total: 100,
+        items: '1,2',
+        status: 'PAID',
+        comment: 'Test comment'
+    },
+    {
+        id: 2,
+        deliveryAddress: 'deliveryAddress',
+        total: 200,
+        items: '1,2,3',
+        status: 'PENDING',
+        comment: 'Test comment'
     }
-  ]
+]
 
 class Db extends DataSource {
     // async initialize() {
@@ -68,18 +76,21 @@ class Db extends DataSource {
     }
 
     getOrder(id) {
-      return mock.find(val => val.id === Number(id))
+        return mock.find(val => val.id === Number(id))
     }
 
     getOrderByStatus(status) {
-      return mock.filter(val => val.status === status)
+        return mock.filter(val => val.status === status)
     }
 
-    // updateOrderStatus(id, status) {
-    //     return this.executeCommand(
-    //         `UPDATE orders SET status='${status}' WHERE id=${id}`
-    //     );
-    // }
+    updateStatus(id, status) {
+        const orderIndex = mock.findIndex(val => val.id === Number(id));
+        const order = mock[orderIndex];
+        mock[orderIndex] = {
+            ...order,
+            status
+        };
+    }
 }
 
 const db = new Db();

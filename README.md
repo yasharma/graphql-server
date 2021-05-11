@@ -6,7 +6,7 @@ npm install && npm start
 
 Server will start on 4000, open http://localhost:4000
 ```
-query ExampleQuery($ID: String!, $ordersStatus: String) {
+query ExampleQuery($orderId: String, $ordersStatus: String) {
   orders(status: $ordersStatus) {
     id,
     deliveryAddress,
@@ -16,8 +16,8 @@ query ExampleQuery($ID: String!, $ordersStatus: String) {
     comment,
     status,
   }
-  order(id: $ID) {
-    id,
+  order(id: $orderId) {
+     id,
     deliveryAddress,
     items,
     total,
@@ -26,4 +26,12 @@ query ExampleQuery($ID: String!, $ordersStatus: String) {
     status,
   }
 }
+
+mutation UpdateStatusMutation($updateStatusId: ID, $updateStatusStatus: Status) {
+  updateStatus(id: $updateStatusId, status: $updateStatusStatus) {
+    id,
+    status,
+  }
+}
+
 ```
